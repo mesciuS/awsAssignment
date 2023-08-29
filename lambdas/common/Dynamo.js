@@ -27,6 +27,27 @@ const Dynamo = {
         return data.Item;
     },
 
+    // aggiungiamo il metodo POST per creare uno user
+    async write (data, TableName) {
+        // controlliamo se data ha un ID e se non è il caso ritorniamo un errore
+        if (!data.ID) {
+            throw Error('no ID on the data');
+        };
+        // se ha un ID creiamo i parametri
+        const params = {
+            TableName,
+            Item: data
+        };
+        // creiamo la richiesta per aggiungere i dati alla tabella
+        const res = await documentClient.put(params).promise();
+        // controlliamo che res sia valido, in caso contrario throwiamo un errore
+        if (!res) {
+            throw Error(`there is an error inserting ID of ${data.ID} in table ${TableName}`)
+        }
+
+        return data;
+    }
+
 };
 
 // bisogna esportare quest'oggetto per poterlo richiamare e usare nelle nostre funzioni

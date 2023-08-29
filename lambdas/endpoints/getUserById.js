@@ -10,6 +10,7 @@ const tableName = process.env.tableName;
 exports.handler = async event => {
     console.log('event', event)
 
+    // se non esiste un ID nel pathParameter ritorniamo un messaggio specifico
     if (!event.pathParameters || !event.pathParameters.ID){
         return Responses._400({message: 'missing ID'});
     }
